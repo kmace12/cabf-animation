@@ -5,7 +5,7 @@ let dots = [];
 let loopDuration = 300;
 
 function preload() {
-  font = loadFont('NeueHaasGrotesk.ttf'); // Make sure this matches your uploaded font
+  font = loadFont('NeueHaasGroteskDisplayPro-Roman.ttf'); // Make sure this matches your uploaded font
 }
 
 function setup() {
