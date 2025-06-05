@@ -5,7 +5,7 @@ let dots = [];
 let loopDuration = 300;
 
 function preload() {
-  font = loadFont('NeueHaasGrotesk.ttf'); // Replace with your actual font file name
+  font = loadFont('NeueHaasGrotesk.ttf'); // Make sure this matches your uploaded font
 }
 
 function setup() {
@@ -38,7 +38,7 @@ function initDots() {
     let yOffset = height / 2 + bounds.h / 2;
 
     let attempts = 0;
-    while (attempts < 1000) {
+    while (attempts < 2000) { // Increased for denser fill
       let x = random(bounds.x, bounds.x + bounds.w);
       let y = random(bounds.y, bounds.y + bounds.h);
       if (isInsideLetter(char, x, y, fontSize)) {
@@ -51,7 +51,7 @@ function initDots() {
 
 function isInsideLetter(char, x, y, size) {
   let pts = font.textToPoints(char, 0, 0, size, {
-    sampleFactor: 0.3,
+    sampleFactor: 0.5, // Higher detail
     simplifyThreshold: 0
   });
   return collidePointPoly(x, y, pts);
@@ -61,16 +61,16 @@ class Dot {
   constructor(x, y, seed) {
     this.x = x;
     this.y = y;
-    this.baseSize = random(4, 10);
-    this.amp = random(2, 6);
+    this.baseSize = random(3, 6); // Smaller for clarity
+    this.amp = random(1, 3);      // Subtle pulsing
     this.phase = random(TWO_PI);
     this.noiseOffset = random(1000);
   }
 
   display(t) {
     let size = this.baseSize + this.amp * sin(TWO_PI * t + this.phase);
-    let dx = map(noise(this.noiseOffset + t * 2), 0, 1, -1.5, 1.5);
-    let dy = map(noise(this.noiseOffset + 100 + t * 2), 0, 1, -1.5, 1.5);
+    let dx = map(noise(this.noiseOffset + t * 2), 0, 1, -0.5, 0.5); // Less jitter
+    let dy = map(noise(this.noiseOffset + 100 + t * 2), 0, 1, -0.5, 0.5);
     fill(0);
     ellipse(this.x + dx, this.y + dy, size);
   }
